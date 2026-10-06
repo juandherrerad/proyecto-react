@@ -2,13 +2,14 @@ import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Desintegracion from "../Componentes/Home/Desintegracion.jsx";
 import ABC from "../img/pedomelo.gif";
+import "../Style/Home.css";
 
 export default function Home(){
     const navigate = useNavigate();
     const irATarjetas = useCallback(() => navigate("/Tarjetas"), [navigate]);
 
     return (
-        <div style={{display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh"}}>
+        <div className="Home">
             <Desintegracion
                 src={ABC}
                 retraso={2500}
