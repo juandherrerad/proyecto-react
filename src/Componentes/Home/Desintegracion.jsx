@@ -6,10 +6,12 @@ export default function Desintegracion({
     duracion = 3000,
     paso = 3,
     onFin,
+    onInicio,
 }) {
     const canvasRef = useRef(null)
     const imgRef = useRef(null)
     const onFinRef = useRef(onFin)
+    const onInicioRef = useRef(onInicio)
     const [fase, setFase] = useState('mostrando') // mostrando (gif animado) -> desintegrando
     const [prevSrc, setPrevSrc] = useState(src)
     if (prevSrc !== src) {
@@ -19,7 +21,8 @@ export default function Desintegracion({
 
     useEffect(() => {
         onFinRef.current = onFin
-    }, [onFin])
+        onInicioRef.current = onInicio
+    }, [onFin, onInicio])
 
     useEffect(() => {
         const canvas = canvasRef.current
@@ -115,6 +118,7 @@ export default function Desintegracion({
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
                 }
                 setFase('desintegrando')
+                onInicioRef.current?.()
                 requestAnimationFrame(() => animar(particulas))
             }, retraso)
         }

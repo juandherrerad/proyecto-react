@@ -1,6 +1,115 @@
 .Home {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+}
+
+.home-contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+}
+
+/* WELCOME con shine + typewriter */
+.home-welcome {
+    margin: 0;
+    display: flex;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 800;
+    letter-spacing: 0.35em;
+    text-indent: 0.35em;
+    text-align: center;
+    background: linear-gradient(90deg, #312e81, #6366f1, #312e81);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: welcome-shine 3s linear infinite;
+}
+
+.home-welcome .letra {
+    opacity: 0;
+    transform: translateY(12px);
+    display: inline-block;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.home-welcome .letra.visible {
+    opacity: 1;
+    transform: none;
+}
+
+.home-welcome .cursor {
+    color: #6366f1;
+    -webkit-text-fill-color: #6366f1;
+    animation: parpadeo 0.9s steps(1) infinite;
+    font-weight: 300;
+}
+
+@keyframes parpadeo {
+    50% { opacity: 0; }
+}
+
+@keyframes welcome-shine {
+    to { background-position: 200% center; }
+}
+
+/* Subtítulo fade-in */
+.home-sub {
+    margin: 0;
+    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(49, 46, 129, 0.7);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.home-sub.visible {
+    opacity: 1;
+    transform: none;
+}
+
+.home-gif {
+    margin-top: 8px;
+    filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.25));
+}
+
+/* El texto se desintegra junto al gif */
+.home-contenido.desintegrando .home-welcome .letra {
+    animation: welcome-desintegrar 1s ease forwards;
+    animation-delay: calc(var(--i) * 0.08s);
+}
+
+.home-contenido.desintegrando .home-sub,
+.home-contenido.desintegrando .cursor {
+    animation: desvanecer 0.6s ease forwards;
+}
+
+@keyframes welcome-desintegrar {
+    40% {
+        opacity: 1;
+        filter: blur(2px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-46px) translateX(calc((var(--i) - 3) * 14px)) rotate(calc((var(--i) - 3) * 8deg));
+        filter: blur(10px);
+    }
+}
+
+@keyframes desvanecer {
+    to { opacity: 0; transform: translateY(-14px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-welcome,
+    .home-welcome .cursor {
+        animation: none;
+    }
 }
